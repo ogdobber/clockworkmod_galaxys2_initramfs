@@ -124,7 +124,7 @@ loglevel 3
 on fs
     # mount mtd partitions
     # Mount /system rw first to give the filesystem a chance to save a checkpoint
-    mount ext4 /dev/block/mmcblk0p9 /system wait rw
+    mount ext4 /dev/block/mmcblk0p9 /system wait ro
     mount ext4 /dev/block/mmcblk0p7 /cache nosuid nodev noatime wait
 
     # SEC_DMCRYPT move mounting efs befor apply_disk_policy, and set group id to system
@@ -143,7 +143,7 @@ on post-fs
 	exec apply_system_policy /dev/block/mmcblk0p11 vfat
     
     # once everything is setup, no need to modify /
-    # mount rootfs rootfs / ro remount
+    mount rootfs rootfs / ro remount
 
     # We chown/chmod /data again so because mount is run as root + defaults
     # use movinand second partition as /data.
