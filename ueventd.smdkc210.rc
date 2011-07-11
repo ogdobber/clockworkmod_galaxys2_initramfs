@@ -134,4 +134,6 @@
 
 /dev/pmem                 0660   system     graphics
 
+#JPN CPRM
+/dev/block/mmcblk1		0660   root       system
 

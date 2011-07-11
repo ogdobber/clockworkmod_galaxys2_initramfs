@@ -162,14 +162,14 @@ on post-fs
     chmod 0771 /dbdata
     mkdir /dbdata/databases
     chown system system /dbdata/databases
-    chmod 0777 /dbdata/databases
+    chmod 1777 /dbdata/databases
     mkdir /dbdata/system
     chown system system /dbdata/system
     chmod 0775 /dbdata/system
     # To keep the clipped data as it is after rebooting
     mkdir /data/clipboard
     chown system system /data/clipboard
-    chmod 0777 /data/clipboard
+    chmod 0775 /data/clipboard
 
     mount rootfs rootfs / ro remount
 
@@ -272,10 +272,10 @@ on post-fs
     chown system system /data/app    
 
     # create log system
-    mkdir /data/log 0777 system system
+    mkdir /data/log 1777 system system
 
-    chmod 0777 /data/log
-    chmod 0777 /data/anr
+    chmod 1777 /data/log
+    chmod 1777 /data/anr
     
     chmod 0662 /dev/log/radio
     chmod 0662 /dev/log/main
@@ -491,6 +491,7 @@ on boot
 	chown radio radio /sys/devices/virtual/mdnieset_ui/switch_mdnieset_ui/mdnieset_ui_file_cmd 
 	chown radio system /sys/devices/platform/s5p-ehci/ehci_power
 	chown radio system /sys/devices/virtual/net/svnet0/waketime
+	chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
 
 
 #### End of Add permission for ATM. 2010.03.20 #######################
@@ -699,12 +700,20 @@ service dhcpcd /system/bin/dhcpcd
     disabled
     oneshot
 
+service softap_event /system/bin/softap_event
+    user system
+    group wifi net_raw net_admin system inet
+    disabled
+    oneshot
+
 #for WiFi MFG(TestMode)
 service mfgloader /system/bin/mfgloader
     disabled
     oneshot
 
 service wlandutservice /system/bin/wlandutservice
+	user system
+    group wifi net_raw net_admin system inet
     disabled
     oneshot
 
